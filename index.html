@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harry Potter Character Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- webpage starts here -->
+    <!-- main div started -->
+    <div class="container">
+        <h1>Harry Potter Character Search</h1>
+
+        <!-- input div started -->
+        <div class="input-container">
+            <input type="text" id="character-input" placeholder="Enter character name" />
+            <button id="get-character-btn">Get Character</button>
+        </div>
+
+        <!--  displaying div-->
+        <div id="character-info" class="hidden">
+            <img id="character-image" class="character-img" src="" alt="Character Image">
+            <h2 id="character-name"></h2>
+            <p id="house"></p>
+            <p id="yearofbirth"></p>
+            <p id="wand"></p>
+        </div>
+
+        <!-- pooping error message -->
+        <p id="error-message" class="hidden">Character not found. Try again.</p>
+
+        <!-- New Section: Previous Searches -->
+        <div id="previous-searches">
+            <h3>Previous Searches</h3>
+            <ul id="search-history"></ul>
+        </div>
+
+    </div>
+
+    <!-- footer of the website -->
+    <footer class="footer">
+
+        <div class="footer-info">
+            <h3>Harry Potter</h3>
+            
+        </div>
+    </footer>
+    <!-- webpage end here -->
+
+    <script src="script.js"></script>
+</body>
+</html>

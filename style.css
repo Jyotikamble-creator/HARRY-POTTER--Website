@@ -1,0 +1,111 @@
+/* styling the whole wesite begins */
+/* styling whole website */
+/* styling the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* styling the container div */
+.container {
+    max-width: 500px;
+    margin: 0 auto;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* styling the input-container */
+.input-container {
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 10px;
+    width: 60%;
+    border: none;
+    border-radius: 5px;
+}
+
+/* styling the button */
+button {
+    padding: 10px;
+    background-color: #ffcc00;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #ff9900;
+}
+
+/*  styling the character-info section*/
+#character-info {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #444;
+    border-radius: 5px;
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+/* styling the error-message */
+#error-message {
+    color: red;
+    font-weight: bold;
+    display: none;
+}
+
+/* styling the Character Image */
+.character-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid #ffcc00;
+    margin-bottom: 10px;
+}
+
+/* styling the Previous Searches */
+#previous-searches {
+    margin-top: 20px;
+}
+
+/* styling the search-history div */
+#search-history {
+    list-style: none;
+    padding: 0;
+}
+
+#search-history li {
+    cursor: pointer;
+    color: #ffcc00;
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+#search-history li:hover {
+    color: #ff9900;
+    font-weight: bold;
+}
+
+/* styling  the footer   */
+.footer {
+    background-color: #ff8000;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    bottom: 0;
+    width: 205vh;
+    position: absolute;
+    font-size: 1.2rem;
+}
+
+/* styling the whole website ends */
