@@ -81,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // saving the data in the history
-
     function saveSearch(character) {
         let searches = JSON.parse(localStorage.getItem("searchHistory")) || [];
 
