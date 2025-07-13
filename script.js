@@ -41,29 +41,69 @@ document.addEventListener("DOMContentLoaded", () => {
         getCharacterBtn.textContent = "Get Character";
     }
 
+
+    // Levenshtein Distance function
+    function getLevenshteinDistance(a, b) {
+        const dp = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+
+        for (let i = 0; i <= a.length; i++) dp[i][0] = i;
+        for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+
+        for (let i = 1; i <= a.length; i++) {
+            for (let j = 1; j <= b.length; j++) {
+                const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+                dp[i][j] = Math.min(
+                    dp[i - 1][j] + 1,
+                    dp[i][j - 1] + 1,
+                    dp[i - 1][j - 1] + cost
+                );
+            }
+        }
+
+        return dp[a.length][b.length];
+    }
+
+    // Character data fetching with fuzzy matching
     async function fetchCharacterData(characterName) {
         const url = `https://hp-api.onrender.com/api/characters`;
 
         try {
             const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error("Failed to fetch data");
 
             const data = await response.json();
-            let characterData = data.find(c => c.name.toLowerCase() === characterName.toLowerCase());
-            if (!characterData) {
-                characterData = data.find(c => c.name.toLowerCase().includes(characterName.toLowerCase()))
 
+            // Exact match
+            let match = data.find(c => c.name.toLowerCase() === characterName.toLowerCase());
+
+            // Partial match
+            if (!match) {
+                match = data.find(c => c.name.toLowerCase().includes(characterName.toLowerCase()));
             }
-            return characterData || null;
+
+            // Fuzzy match
+            if (!match) {
+                let minDistance = Infinity;
+                let closestMatch = null;
+                for (const c of data) {
+                    const dist = getLevenshteinDistance(c.name.toLowerCase(), characterName.toLowerCase());
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        closestMatch = c;
+                    }
+                }
+                if (minDistance <= 3) {
+                    match = closestMatch;
+                }
+            }
+
+            return match || null;
 
         } catch (error) {
-            console.error("Fetch error:", error.message);
+            console.error("Fetch error:", error);
             return null;
         }
     }
-
 
     // displaying the data on the webpage
     function displayCharacterData(data) {
@@ -127,6 +167,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+
+
 
 
 
