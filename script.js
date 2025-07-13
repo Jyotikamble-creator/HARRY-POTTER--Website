@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const characterNameDisplay = document.getElementById("character-name");
     const houseDisplay = document.getElementById("house");
     const yearOfBirthDisplay = document.getElementById("yearofbirth");
-    const wandDisplay = document.getElementById("wand");
+    const wandWoodDisplay = document.getElementById("wand");
+    const wandCoreDisplay = document.getElementById("wand-core");
     const errorMessage = document.getElementById("error-message");
     const searchHistoryList = document.getElementById("search-history");
 
@@ -14,42 +15,55 @@ document.addEventListener("DOMContentLoaded", () => {
     loadPreviousSearches();
 
     getCharacterBtn.addEventListener("click", async () => {
+        getCharacterBtn.disabled = true;
+        getCharacterBtn.textContent = "Loading...";
+
         const character = characterInput.value.trim();
         if (!character) {
             showError("Please enter a character name.");
+            resetButton();
             return;
         }
 
-        try {
-            const characterData = await fetchCharacterData(character);
-            if (characterData) {
-                displayCharacterData(characterData);
-                saveSearch(character);
-            } else {
-                showError("Character not found. Try again.");
-            }
-        } catch (error) {
-            showError("Failed to fetch data. Please check your connection.");
+        const characterData = await fetchCharacterData(character);
+        if (characterData) {
+            displayCharacterData(characterData);
+            saveSearch(character);
+        } else {
+            showError("Character not found or API error.");
         }
+
+        resetButton();
     });
 
-    // fetching the data from the url
+    function resetButton() {
+        getCharacterBtn.disabled = false;
+        getCharacterBtn.textContent = "Get Character";
+    }
+
     async function fetchCharacterData(characterName) {
         const url = `https://hp-api.onrender.com/api/characters`;
 
         try {
             const response = await fetch(url);
             if (!response.ok) {
-                throw new Error("Failed to fetch data");
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const data = await response.json();
-            return data.find(c => c.name.toLowerCase() === characterName.toLowerCase()) || null;
+            let characterData = data.find(c => c.name.toLowerCase() === characterName.toLowerCase());
+            if (!characterData) {
+                characterData = data.find(c => c.name.toLowerCase().includes(characterName.toLowerCase()))
+
+            }
+            return characterData || null;
+
         } catch (error) {
-            console.error("Error fetching character data:", error);
+            console.error("Fetch error:", error.message);
             return null;
         }
     }
+
 
     // displaying the data on the webpage
     function displayCharacterData(data) {
@@ -59,7 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
         characterNameDisplay.textContent = `Name: ${name || ""}`;
         houseDisplay.textContent = `House: ${house}`;
         yearOfBirthDisplay.textContent = `Year of Birth: ${yearOfBirth}`;
-        wandDisplay.textContent = `Wand: ${wand.wood} wood, ${wand.core} core, `;
+        wandWoodDisplay.textContent = `Wand: ${wand.wood || "unknown"} wood, ${wand.core || "unknown"} core`;
+
 
         // Show character image (if available)
         if (image) {
@@ -95,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateSearchHistory();
     }
 
-    // updateting the data
+    // updating the data
     function updateSearchHistory() {
         let searches = JSON.parse(localStorage.getItem("searchHistory")) || [];
         searchHistoryList.innerHTML = "";
@@ -112,3 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 });
+
+
+
+
+
+
