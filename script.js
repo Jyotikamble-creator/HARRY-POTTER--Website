@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const characterInput = document.getElementById("character-input");
+    const suggestionsList = document.getElementById("suggestions-list");
     const getCharacterBtn = document.getElementById("get-character-btn");
     const characterInfo = document.getElementById("character-info");
     const characterImage = document.getElementById("character-image");
@@ -7,13 +8,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const houseDisplay = document.getElementById("house");
     const yearOfBirthDisplay = document.getElementById("yearofbirth");
     const wandWoodDisplay = document.getElementById("wand");
-    const wandCoreDisplay = document.getElementById("wand-core");
     const errorMessage = document.getElementById("error-message");
-    const searchHistoryList = document.getElementById("search-history");
-
+    const searchHistoryList = document.getElementById("previous-searches");
+const toggleHistory = document.getElementById("toggle-history");
     // Load previous searches on page load
     loadPreviousSearches();
 
+    
+ 
+
+    toggleHistory.addEventListener("click", () => {
+        const historyList = document.getElementById("search-history");
+        historyList.classList.toggle("hidden");
+
+        // Optionally toggle arrow icon in heading
+        const isVisible = !historyList.classList.contains("hidden");
+        toggleHistory.textContent = `Previous Searches ${isVisible ? "⬇️" : "➡️"}`;
+    })
     getCharacterBtn.addEventListener("click", async () => {
         getCharacterBtn.disabled = true;
         getCharacterBtn.textContent = "Loading...";
@@ -40,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         getCharacterBtn.disabled = false;
         getCharacterBtn.textContent = "Get Character";
     }
+
 
 
     // Levenshtein Distance function
@@ -172,7 +184,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+let allCharacters = [];
 
+characterInput.addEventListener("input", async () => {
+    const query = characterInput.value.trim().toLowerCase();
+    if (!query) {
+        suggestionsList.classList.add("hidden");
+        return;
+    }
+
+    
+
+    const matches = allCharacters.filter(c =>
+        c.name.toLowerCase().includes(query)
+    );
+
+    updateSuggestions(matches.slice(0, 5)); // Limit to 5 suggestions
+});
+
+function updateSuggestions(matches) {
+    suggestionsList.innerHTML = "";
+    
+    if (matches.length === 0) {
+        suggestionsList.classList.add("hidden");
+        return;
+    }
+
+    matches.forEach(character => {
+        const li = document.createElement("li");
+        li.textContent = character.name;
+        li.addEventListener("click", () => {
+            characterInput.value = character.name;
+            suggestionsList.classList.add("hidden");
+            getCharacterBtn.click(); // trigger search
+        });
+        suggestionsList.appendChild(li);
+    });
+
+    suggestionsList.classList.remove("hidden");
+}
 
 
 

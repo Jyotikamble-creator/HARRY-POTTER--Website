@@ -1,6 +1,6 @@
 # 🧠 Harry Potter
 
-A simple Website for the Harry potter Fans.this webpage is built using **HTML** ,**CSS** and **JAVASCRIPT** designed to display the character details .
+A simple Web App made **just to fetch the data and display from the API** for the Harry potter Fans .This webpage is built using **HTML** ,**CSS** and **JAVASCRIPT** designed to display the character details .
 
 
 ---
@@ -9,6 +9,7 @@ A simple Website for the Harry potter Fans.this webpage is built using **HTML** 
 
 
 - ✅ Started as my first project in **javascript project**.
+- 🔗 Consumes the free [The API](https://www.themealdb.com/)
 - 🔄 Intinally only simple serache feature is built for charcter.
 - 🧠 Later used to store in localstorge(host).
 - Data of the character is from a **API**.

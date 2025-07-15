@@ -17,8 +17,10 @@
         <!-- input div started -->
         <div class="input-container">
             <input type="text" id="character-input" placeholder="Enter character name" />
+            
             <button id="get-character-btn">Get Character</button>
         </div>
+<ul class="suggestions " id="suggestions-list  hidden"></ul>
 
         <!--  displaying div-->
         <div id="character-info" class="hidden">
@@ -33,10 +35,7 @@
         <p id="error-message" class="hidden">Character not found. Try again.</p>
 
         <!-- New Section: Previous Searches -->
-        <div id="previous-searches">
-            <h3>Previous Searches</h3>
-            <ul id="search-history"></ul>
-        </div>
+        <h3 id="toggle-history" style="cursor: pointer;">Previous Searches ⬇️</h3>
 
     </div>
 

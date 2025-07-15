@@ -30,6 +30,32 @@ input {
     border: none;
     border-radius: 5px;
 }
+.suggestions-list {
+    background-color: #222;
+    color: #fff;
+    list-style: none;
+    padding: 0;
+    margin-top: 5px;
+    border-radius: 5px;
+    text-align: left;
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #555;
+}
+
+.suggestions-list li {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #444;
+}
+
+.suggestions-list li:hover {
+    background-color: #333;
+}
+
+.hidden {
+    display: none;
+}
 
 /* styling the button */
 button {
@@ -96,6 +122,8 @@ button:hover {
     color: #ff9900;
     font-weight: bold;
 }
+
+
 
 /* styling  the footer   */
 .footer {
