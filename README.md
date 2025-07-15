@@ -9,7 +9,7 @@ A simple Web App made **just to fetch the data and display from the API** for th
 
 
 - ✅ Started as my first project in **javascript project**.
-- 🔗 Consumes the free [The API](https://hp-api.onrender.com/api/characters)
+- 🔗 Consumes the free [The API](https://hp-api.onrender.com/)
 - 🔄 Intinally only simple search feature is built for character.
 - 🧠 Later used to store in localstorge(host).
 - 🧱 Finaly all the character are searched and stored the history.
@@ -30,4 +30,4 @@ A simple Web App made **just to fetch the data and display from the API** for th
 
 1. Clone this repo:  
    ```bash
-   git clone https://github.com/Jyotikamble-creator/HARRY-POTTER--Website
+   git clone https://github.com/Jyotikamble-creator/HARRY-POTTER--Website.git
