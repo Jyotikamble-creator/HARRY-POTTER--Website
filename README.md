@@ -9,9 +9,25 @@ A simple Web App made **just to fetch the data and display from the API** for th
 
 
 - ✅ Started as my first project in **javascript project**.
-- 🔗 Consumes the free [The API](https://www.themealdb.com/)
-- 🔄 Intinally only simple serache feature is built for charcter.
+- 🔗 Consumes the free [The API](https://hp-api.onrender.com/api/characters)
+- 🔄 Intinally only simple search feature is built for character.
 - 🧠 Later used to store in localstorge(host).
-- Data of the character is from a **API**.
-- No **API KEY** is used ,it is freee api.
-- 🧱 Finaly all the charcter are searched and stored the history.
+- 🧱 Finaly all the character are searched and stored the history.
+
+---
+
+## 🔧 Tech Stack
+
+| Layer        | Library / Tool       |
+|--------------|----------------------|
+| UI           | CSS3                 |
+| Architecture | SPA(single-page)     |
+|Language      | Javascript           |
+
+---
+
+## 🛠️ How to Run
+
+1. Clone this repo:  
+   ```bash
+   git clone https://github.com/Jyotikamble-creator/HARRY-POTTER--Website
