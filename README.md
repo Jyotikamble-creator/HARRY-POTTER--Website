@@ -1,33 +1,65 @@
-# 🧠 Harry Potter
+# 🧙‍♂️ Harry Potter Character Search
 
-A simple Web App made **just to fetch the data and display from the API** for the Harry potter Fans .This webpage is built using **HTML** ,**CSS** and **JAVASCRIPT** designed to display the character details .
+This is a responsive web application that allows users to search for **Harry Potter characters** using fuzzy search, autocomplete suggestions, and a visual display of character details. It uses data from the [HP API](https://hp-api.onrender.com/) and provides a dynamic and user-friendly experience with search history tracking.
 
+## 🔮 Features
 
----
+- 🔍 **Fuzzy Search:** Handles typos and close matches intelligently.
+- 💡 **Autocomplete Suggestions:** Shows top matches as you type.
+- 🖼️ **Character Display:** Shows image, house, wand details, and birth year.
+- 🕵️ **Search History:** Saves your previous searches in local storage.
+- 📱 **Responsive UI:** Works on mobile, tablet, and desktop.
+- 🧼 **Error Handling:** Gracefully handles character not found and empty inputs.
 
-## 🛤️ Project Evolution
+<!-- ## 🚀 Live Demo
 
+You can deploy this easily using GitHub Pages, Netlify, or Vercel. -->
 
-- ✅ Started as my first project in **javascript project**.
-- 🔗 Consumes the free [The API](https://hp-api.onrender.com/)
-- 🔄 Intinally only simple search feature is built for character.
-- 🧠 Later used to store in localstorge(host).
-- 🧱 Finaly all the character are searched and stored the history.
+## 🧰 Technologies Used
 
----
+- HTML5
+- CSS3 (Responsive Design)
+- Vanilla JavaScript
+- [HP-API](https://hp-api.onrender.com/)
 
-## 🔧 Tech Stack
+## 📦 Installation
 
-| Layer        | Library / Tool       |
-|--------------|----------------------|
-| UI           | CSS3                 |
-| Architecture | SPA(single-page)     |
-|Language      | Javascript           |
+1. Clone the repository:
 
----
+```bash
+git clone https://github.com/your-username/harry-potter-character-search.git
+```
 
-## 🛠️ How to Run
+<!-- 2.Navigate to the project folder:
 
-1. Clone this repo:  
-   ```bash
-   git clone https://github.com/Jyotikamble-creator/HARRY-POTTER--Website.git
+```bash
+cd harry-potter-character-search
+```
+3.Open index.html in your browser directly or use a local server:
+
+```bash
+# using VS Code Live Server or Python
+python3 -m http.server
+``` -->
+## 📂 Project Structure
+```
+harry-potter-character-search/
+├── index.html        # Main HTML file
+├── style.css         # App styling (responsive)
+├── script.js         # Main JavaScript logic
+└── README.md         # This file
+```
+
+## 📸 Screenshot
+
+## 📝 Notes
+
+- This project uses the free HP API, so it may be rate-limited or  temporarily unavailable if the server is under load.
+
+- No frameworks or libraries were used — just plain HTML/CSS/JS.
+
+## 🙌 Acknowledgments
+
+-  Data powered by: https://hp-api.onrender.com
+
+- Inspired by the magical world of Harry Potter created by J.K. Rowling.
