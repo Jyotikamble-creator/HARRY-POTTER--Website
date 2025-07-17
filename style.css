@@ -1,146 +1,141 @@
-/* styling the whole wesite begins */
-/* styling whole website */
-/* styling the body */
+/* General styling */
 body {
     font-family: Arial, sans-serif;
     background-color: #1a1a1a;
     color: white;
-    text-align: center;
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
 }
 
-/* styling the container div */
+.page-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* center if content is short */
+}
+
 .container {
     max-width: 500px;
-    margin: 0 auto;
+    margin: auto;
     background-color: #333;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
 }
-
-/* styling the input-container */
+/* Input container */
 .input-container {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 input {
-    padding: 10px;
-    width: 60%;
-    border: none;
-    border-radius: 5px;
-}
-.suggestions-list {
-    background-color: #222;
-    color: #fff;
-    list-style: none;
-    padding: 0;
-    margin-top: 5px;
-    border-radius: 5px;
-    text-align: left;
-    max-height: 150px;
-    overflow-y: auto;
-    border: 1px solid #555;
+  padding: 10px;
+  width: 60%;
+  border: none;
+  border-radius: 5px;
 }
 
-.suggestions-list li {
-    padding: 10px;
-    cursor: pointer;
-    border-bottom: 1px solid #444;
-}
-
-.suggestions-list li:hover {
-    background-color: #333;
-}
-
-.hidden {
-    display: none;
-}
-
-/* styling the button */
 button {
-    padding: 10px;
-    background-color: #ffcc00;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
+  padding: 10px;
+  background-color: #ffcc00;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 button:hover {
-    background-color: #ff9900;
+  background-color: #ff9900;
 }
 
-/*  styling the character-info section*/
-#character-info {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #444;
-    border-radius: 5px;
-    display: none;
+/* Suggestions dropdown */
+.suggestions-list {
+  background-color: #222;
+  color: #fff;
+  list-style: none;
+  padding: 0;
+  margin-top: 5px;
+  border-radius: 5px;
+  text-align: left;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #555;
+}
+
+.suggestions-list li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #444;
+}
+
+.suggestions-list li:hover {
+  background-color: #333;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
-/* styling the error-message */
-#error-message {
-    color: red;
-    font-weight: bold;
-    display: none;
+/* Character Info */
+#character-info {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #444;
+  border-radius: 5px;
 }
 
-/* styling the Character Image */
 .character-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 2px solid #ffcc00;
-    margin-bottom: 10px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid #ffcc00;
+  margin-bottom: 10px;
 }
 
-/* styling the Previous Searches */
-#previous-searches {
-    margin-top: 20px;
+/* Error message */
+#error-message {
+  color: red;
+  font-weight: bold;
 }
 
-/* styling the search-history div */
+/* Search history */
 #search-history {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
 }
 
 #search-history li {
-    cursor: pointer;
-    color: #ffcc00;
-    margin: 5px 0;
-    transition: 0.3s;
+  cursor: pointer;
+  color: #ffcc00;
+  margin: 5px 0;
+  transition: 0.3s;
 }
 
 #search-history li:hover {
-    color: #ff9900;
-    font-weight: bold;
+  color: #ff9900;
+  font-weight: bold;
 }
 
+/* Toggle button */
+.toggle-btn {
+  cursor: pointer;
+  margin-top: 20px;
+  color: #ffcc00;
+}
 
-
-/* styling  the footer   */
+/* Footer */
 .footer {
     background-color: #ff8000;
     color: rgb(255, 255, 255);
     text-align: center;
-    bottom: 0;
-    width: 205vh;
-    position: relative;
+    padding: 15px;
+    width: 100%;
     font-size: 1.2rem;
 }
-
-/* styling the whole website ends */
-
-
-
-
-
-
-

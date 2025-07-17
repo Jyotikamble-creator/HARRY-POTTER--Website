@@ -1,228 +1,165 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const characterInput = document.getElementById("character-input");
-    const suggestionsList = document.getElementById("suggestions-list");
-    const getCharacterBtn = document.getElementById("get-character-btn");
-    const characterInfo = document.getElementById("character-info");
-    const characterImage = document.getElementById("character-image");
-    const characterNameDisplay = document.getElementById("character-name");
-    const houseDisplay = document.getElementById("house");
-    const yearOfBirthDisplay = document.getElementById("yearofbirth");
-    const wandWoodDisplay = document.getElementById("wand");
-    const errorMessage = document.getElementById("error-message");
-    const searchHistoryList = document.getElementById("previous-searches");
-const toggleHistory = document.getElementById("toggle-history");
-    // Load previous searches on page load
-    loadPreviousSearches();
+  const characterInput = document.getElementById("character-input");
+  const suggestionsList = document.getElementById("suggestions-list");
+  const getCharacterBtn = document.getElementById("get-character-btn");
+  const characterInfo = document.getElementById("character-info");
+  const characterImage = document.getElementById("character-image");
+  const characterNameDisplay = document.getElementById("character-name");
+  const houseDisplay = document.getElementById("house");
+  const yearOfBirthDisplay = document.getElementById("yearofbirth");
+  const wandDisplay = document.getElementById("wand");
+  const errorMessage = document.getElementById("error-message");
+  const searchHistoryList = document.getElementById("search-history");
+  const toggleHistory = document.getElementById("toggle-history");
 
-    
- 
+  let allCharacters = [];
 
-    toggleHistory.addEventListener("click", () => {
-        const historyList = document.getElementById("search-history");
-        historyList.classList.toggle("hidden");
-
-        // Optionally toggle arrow icon in heading
-        const isVisible = !historyList.classList.contains("hidden");
-        toggleHistory.textContent = `Previous Searches ${isVisible ? "⬇️" : "➡️"}`;
-    })
-    getCharacterBtn.addEventListener("click", async () => {
-        getCharacterBtn.disabled = true;
-        getCharacterBtn.textContent = "Loading...";
-
-        const character = characterInput.value.trim();
-        if (!character) {
-            showError("Please enter a character name.");
-            resetButton();
-            return;
-        }
-
-        const characterData = await fetchCharacterData(character);
-        if (characterData) {
-            displayCharacterData(characterData);
-            saveSearch(character);
-        } else {
-            showError("Character not found or API error.");
-        }
-
-        resetButton();
+  // Fetch all characters once
+  fetch("https://hp-api.onrender.com/api/characters")
+    .then(res => res.json())
+    .then(data => {
+      allCharacters = data;
     });
 
-    function resetButton() {
-        getCharacterBtn.disabled = false;
-        getCharacterBtn.textContent = "Get Character";
+  function showError(message) {
+    characterInfo.classList.add("hidden");
+    errorMessage.classList.remove("hidden");
+    errorMessage.textContent = message;
+  }
+
+  function displayCharacter(data) {
+    characterImage.src = data.image || "";
+    characterImage.style.display = data.image ? "block" : "none";
+    characterNameDisplay.textContent = `Name: ${data.name}`;
+    houseDisplay.textContent = `House: ${data.house}`;
+    yearOfBirthDisplay.textContent = `Year of Birth: ${data.yearOfBirth}`;
+    wandDisplay.textContent = `Wand: ${data.wand.wood || "Unknown"} wood, ${data.wand.core || "Unknown"} core`;
+
+    characterInfo.classList.remove("hidden");
+    errorMessage.classList.add("hidden");
+  }
+
+  async function fetchCharacter(name) {
+    const data = allCharacters;
+
+    // Exact
+    let match = data.find(c => c.name.toLowerCase() === name.toLowerCase());
+
+    // Partial
+    if (!match) {
+      match = data.find(c => c.name.toLowerCase().includes(name.toLowerCase()));
     }
 
+    // Fuzzy
+    if (!match) {
+      let minDist = Infinity;
+      let closest = null;
 
-
-    // Levenshtein Distance function
-    function getLevenshteinDistance(a, b) {
-        const dp = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
-
-        for (let i = 0; i <= a.length; i++) dp[i][0] = i;
-        for (let j = 0; j <= b.length; j++) dp[0][j] = j;
-
-        for (let i = 1; i <= a.length; i++) {
-            for (let j = 1; j <= b.length; j++) {
-                const cost = a[i - 1] === b[j - 1] ? 0 : 1;
-                dp[i][j] = Math.min(
-                    dp[i - 1][j] + 1,
-                    dp[i][j - 1] + 1,
-                    dp[i - 1][j - 1] + cost
-                );
-            }
+      for (const c of data) {
+        const dist = getLevenshteinDistance(c.name.toLowerCase(), name.toLowerCase());
+        if (dist < minDist) {
+          minDist = dist;
+          closest = c;
         }
+      }
 
-        return dp[a.length][b.length];
+      if (minDist <= 3) match = closest;
     }
 
-    // Character data fetching with fuzzy matching
-    async function fetchCharacterData(characterName) {
-        const url = `https://hp-api.onrender.com/api/characters`;
+    return match || null;
+  }
 
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error("Failed to fetch data");
+  getCharacterBtn.addEventListener("click", async () => {
+    const name = characterInput.value.trim();
+    if (!name) return showError("Please enter a character name.");
 
-            const data = await response.json();
+    getCharacterBtn.disabled = true;
+    getCharacterBtn.textContent = "Loading...";
 
-            // Exact match
-            let match = data.find(c => c.name.toLowerCase() === characterName.toLowerCase());
-
-            // Partial match
-            if (!match) {
-                match = data.find(c => c.name.toLowerCase().includes(characterName.toLowerCase()));
-            }
-
-            // Fuzzy match
-            if (!match) {
-                let minDistance = Infinity;
-                let closestMatch = null;
-                for (const c of data) {
-                    const dist = getLevenshteinDistance(c.name.toLowerCase(), characterName.toLowerCase());
-                    if (dist < minDistance) {
-                        minDistance = dist;
-                        closestMatch = c;
-                    }
-                }
-                if (minDistance <= 3) {
-                    match = closestMatch;
-                }
-            }
-
-            return match || null;
-
-        } catch (error) {
-            console.error("Fetch error:", error);
-            return null;
-        }
+    const character = await fetchCharacter(name);
+    if (character) {
+      displayCharacter(character);
+      saveSearch(name);
+    } else {
+      showError("Character not found.");
     }
 
-    // displaying the data on the webpage
-    function displayCharacterData(data) {
-        console.log("Character Data:", data);
-        const { name, house, yearOfBirth, wand, image } = data;
+    getCharacterBtn.disabled = false;
+    getCharacterBtn.textContent = "Get Character";
+  });
 
-        characterNameDisplay.textContent = `Name: ${name || ""}`;
-        houseDisplay.textContent = `House: ${house}`;
-        yearOfBirthDisplay.textContent = `Year of Birth: ${yearOfBirth}`;
-        wandWoodDisplay.textContent = `Wand: ${wand.wood || "unknown"} wood, ${wand.core || "unknown"} core`;
-
-
-        // Show character image (if available)
-        if (image) {
-            characterImage.src = image;
-            characterImage.style.display = "block";
-        } else {
-            characterImage.style.display = "none";
-        }
-
-        characterInfo.style.display = "block";
-        errorMessage.style.display = "none";
-    }
-
-    // display the error-message
-    function showError(message) {
-        characterInfo.style.display = "none";
-        errorMessage.style.display = "block";
-        errorMessage.textContent = message;
-    }
-
-    // saving the data in the history
-    function saveSearch(character) {
-        let searches = JSON.parse(localStorage.getItem("searchHistory")) || [];
-
-        if (!searches.includes(character)) {
-            searches.push(character);
-            localStorage.setItem("searchHistory", JSON.stringify(searches));
-            updateSearchHistory();
-        }
-    }
-
-    function loadPreviousSearches() {
-        updateSearchHistory();
-    }
-
-    // updating the data
-    function updateSearchHistory() {
-        let searches = JSON.parse(localStorage.getItem("searchHistory")) || [];
-        searchHistoryList.innerHTML = "";
-
-        searches.forEach(character => {
-            const listItem = document.createElement("li");
-            listItem.textContent = character;
-            listItem.addEventListener("click", () => {
-                characterInput.value = character;
-                getCharacterBtn.click();
-            });
-            searchHistoryList.appendChild(listItem);
-        });
-    }
-
-});
-
-
-
-
-
-let allCharacters = [];
-
-characterInput.addEventListener("input", async () => {
+  // Suggestions
+  characterInput.addEventListener("input", () => {
     const query = characterInput.value.trim().toLowerCase();
-    if (!query) {
-        suggestionsList.classList.add("hidden");
-        return;
-    }
+    if (!query) return suggestionsList.classList.add("hidden");
 
-    
+    const matches = allCharacters
+      .filter(c => c.name.toLowerCase().includes(query))
+      .slice(0, 5);
 
-    const matches = allCharacters.filter(c =>
-        c.name.toLowerCase().includes(query)
-    );
-
-    updateSuggestions(matches.slice(0, 5)); // Limit to 5 suggestions
-});
-
-function updateSuggestions(matches) {
     suggestionsList.innerHTML = "";
-    
-    if (matches.length === 0) {
+    matches.forEach(c => {
+      const li = document.createElement("li");
+      li.textContent = c.name;
+      li.addEventListener("click", () => {
+        characterInput.value = c.name;
         suggestionsList.classList.add("hidden");
-        return;
-    }
-
-    matches.forEach(character => {
-        const li = document.createElement("li");
-        li.textContent = character.name;
-        li.addEventListener("click", () => {
-            characterInput.value = character.name;
-            suggestionsList.classList.add("hidden");
-            getCharacterBtn.click(); // trigger search
-        });
-        suggestionsList.appendChild(li);
+        getCharacterBtn.click();
+      });
+      suggestionsList.appendChild(li);
     });
 
     suggestionsList.classList.remove("hidden");
-}
+  });
 
+  // History
+  function saveSearch(name) {
+    let history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+    if (!history.includes(name)) {
+      history.push(name);
+      localStorage.setItem("searchHistory", JSON.stringify(history));
+      updateHistory();
+    }
+  }
 
+  function updateHistory() {
+    const history = JSON.parse(localStorage.getItem("searchHistory")) || [];
+    searchHistoryList.innerHTML = "";
+    history.forEach(name => {
+      const li = document.createElement("li");
+      li.textContent = name;
+      li.addEventListener("click", () => {
+        characterInput.value = name;
+        getCharacterBtn.click();
+      });
+      searchHistoryList.appendChild(li);
+    });
+  }
 
+  toggleHistory.addEventListener("click", () => {
+    const isHidden = searchHistoryList.classList.toggle("hidden");
+    toggleHistory.textContent = `Previous Searches ${isHidden ? "➡️" : "⬇️"}`;
+  });
+
+  updateHistory();
+
+  // Levenshtein Distance
+  function getLevenshteinDistance(a, b) {
+    const dp = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0));
+    for (let i = 0; i <= a.length; i++) dp[i][0] = i;
+    for (let j = 0; j <= b.length; j++) dp[0][j] = j;
+
+    for (let i = 1; i <= a.length; i++) {
+      for (let j = 1; j <= b.length; j++) {
+        const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+        dp[i][j] = Math.min(
+          dp[i - 1][j] + 1,
+          dp[i][j - 1] + 1,
+          dp[i - 1][j - 1] + cost
+        );
+      }
+    }
+
+    return dp[a.length][b.length];
+  }
+});
