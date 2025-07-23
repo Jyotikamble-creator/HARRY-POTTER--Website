@@ -27,7 +27,7 @@ You can deploy this easily using GitHub Pages, Netlify, or Vercel. -->
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/harry-potter-character-search.git
+git clone  https://github.com/Jyotikamble-creator/HARRY-POTTER--Website
 ```
 
 <!-- 2.Navigate to the project folder:
