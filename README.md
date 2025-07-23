@@ -51,6 +51,11 @@ harry-potter-character-search/
 ```
 
 ## 📸 Screenshot
+<img src="https://github.com/user-attachments/assets/e162fce9-3341-4b76-b25d-05f3fdac0351" alt="all" width="100%"/>
+<img width="100%"  alt="harry" src="https://github.com/user-attachments/assets/e2df1193-71fa-4201-88fb-4c32f509f580" />
+<img width="100%"  alt="drco" src="https://github.com/user-attachments/assets/aafa1ceb-a9d5-4f58-9647-16a2fba45651" />
+<img width="100%"  src="https://github.com/user-attachments/assets/a0763385-3ab2-49df-9ee5-15488c008317" />
+
 
 ## 📝 Notes
 
